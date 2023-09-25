@@ -1,46 +1,112 @@
-type One = string;
-type Two = string | number;
-type Three = "hello";
+class Coder {
+  secondLang!: string;
+  constructor(
+    public readonly name: string,
+    public music: string,
+    private age: number,
+    protected lang: string = "Typescript"
+  ) {
+    this.name = name;
+    this.music = music;
+    this.age = age;
+    this.lang = lang;
+  }
+  public getAge() {
+    return `Hello I am ${this.age}`;
+  }
+}
 
-let a: One = "hello";
-let b = a as Two; // less specific
-let c = a as Three; // more specific
+const Pieash = new Coder("pieash", "rock", 23);
 
-let d = <One>"pi";
-let e = <string | number>"pi";
+// console.log(Pieash.getAge());
+// console.log(Pieash.age);
+// console.log(Pieash.lang);
 
-const addOrConcat = (
-  a: number,
-  b: number,
-  c: "add" | "concat"
-): number | string => {
-  if (c === "add") return a + b;
-  return "" + a + b;
-};
+class WebDev extends Coder {
+  constructor(
+    public computer: string,
+    name: string,
+    music: string,
+    age: number
+  ) {
+    super(name, music, age);
+    this.computer = computer;
+  }
+  public getLang() {
+    return `I write ${this.lang}`;
+  }
+}
 
-let myVal: string = addOrConcat(12, 14, "add") as string;
-let nextVal: number = addOrConcat(12, 14, "add") as number;
+const Sara = new WebDev("Mac", "sara", "Lofi", 25);
+console.log(Sara.getLang());
 
-// 10 as string;
-10 as unknown as string;
+/* ---------------------------------- space --------------------------------- */
 
-const img = document.querySelector("img")!;
-const myImg = document.getElementById("#img") as HTMLImageElement;
+interface Musician {
+  name: string;
+  instrument: string;
+  play(action: string): string;
+}
 
-// img.src;
-// myImg.src;
+class Guitarist implements Musician {
+  name: string;
+  instrument: string;
 
-// let year: HTMLElement | null;
-// year = document.getElementById("year");
+  constructor(name: string, instrument: string) {
+    this.name = name;
+    this.instrument = instrument;
+  }
+  play(action: string): string {
+    return `${this.name} ${action} the ${this.instrument}`;
+  }
+}
 
-// let thisYear: string;
-// thisYear = new Date().getFullYear().toString();
-// if (year) {
-//   year.setAttribute("datetime", thisYear);
-//   year.textContent = thisYear;
-// }
+const Page = new Guitarist("Jimmy", "guitar");
+console.log(Page.play("Strums"));
 
-const year = document.getElementById("year") as HTMLSpanElement;
-const thisYear: string = new Date().getFullYear().toString();
-year.setAttribute("datetime", thisYear);
-year.textContent = thisYear;
+/* --------------------------------- static --------------------------------- */
+
+class Peeps {
+  static count: number = 0;
+
+  static getCount(): number {
+    return Peeps.count;
+  }
+  public id: number;
+
+  constructor(public name: string) {
+    this.name = name;
+    this.id = ++Peeps.count;
+  }
+}
+
+const P = new Peeps("P");
+const Q = new Peeps("Q");
+const R = new Peeps("R");
+
+console.log(Peeps.count);
+console.log(P.id);
+
+/* ---------------------------------- bands --------------------------------- */
+
+class Bands {
+  private dataState: string[];
+  constructor() {
+    this.dataState = [];
+  }
+  public get data(): string[] {
+    return this.dataState;
+  }
+  public set data(value: string[]) {
+    if (Array.isArray(value) && value.every((el) => typeof el === "string")) {
+      this.dataState = value;
+      return;
+    } else throw new Error("Param is not a array of string");
+  }
+}
+
+const MyBands = new Bands();
+MyBands.data = ["Pk", "arthuhin"];
+console.log(MyBands.data);
+MyBands.data = [...MyBands.data, "SadaNil"];
+console.log(MyBands.data);
