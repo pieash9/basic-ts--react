@@ -57,7 +57,7 @@ const infinite = () => {
 const isNumber = (value) => {
     return typeof value === "number" ? true : false;
 };
-// use of never type
+// use of never typee
 const numberOrString = (value) => {
     if (isNumber(value))
         return "string";

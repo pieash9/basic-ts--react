@@ -87,7 +87,7 @@ const isNumber = (value: any): boolean => {
   return typeof value === "number" ? true : false;
 };
 
-// use of never type
+// use of never typee
 const numberOrString = (value: number | string): string => {
   if (isNumber(value)) return "string";
   if (isNumber(value)) return "number";
